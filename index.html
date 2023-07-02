@@ -8,6 +8,7 @@
 
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
   <link rel="stylesheet" href="/style.css">
+  <script type="script" src="script.js"></script>
 
   <title>Frontend Mentor | Newsletter sign-up form with success message</title>
 
@@ -30,52 +31,134 @@
 
   <!-- Sign-up form start -->
   <div class="container">
-    <div class="sign-up-form">
+    <div class="sign-up-form" id="signUp">
       <div class="sign-up-form-content">
-        
-          <div class="heading" >Stay updated!</div>
-          <div class="desc">
-            Join 60,000+ product managers receiving monthly</br> updates on:
-          </div>
-          <div class="points">
-            <ul>
-              <li><img class="icon-list" src="./assets/images/icon-list.svg">Product discovery and building what matters</li>
-              <li><img class="icon-list" src="./assets/images/icon-list.svg">Measuring to ensure updates are a success</li>
-              <li><img class="icon-list" src="./assets/images/icon-list.svg">And much more!</li>
-            </ul>
+        <div class="heading">Stay updated!</div>
+        <div class="desc">
+          Join 60,000+ product managers receiving monthly updates on:
+        </div>
+        <div class="points">
+          <ul>
+            <li><img class="icon-list" src="./assets/images/icon-list.svg">Product discovery and building what matters
+            </li>
+            <li><img class="icon-list" src="./assets/images/icon-list.svg">Measuring to ensure updates are a success
+            </li>
+            <li><img class="icon-list" src="./assets/images/icon-list.svg">And much more!</li>
+          </ul>
 
-          </div>
-          <div class="email-input">
-            <p>Email address</p><span></span>
-            <input type="email" placeholder="email@company.com">
+        </div>
+        <div class="email-input">
+          <p>Email address <span id="invalid"></span></p>
+          <input id="email" type="text" placeholder="email@company.com">
 
-            <div class="btn">
-            <button type="submit">
+          <div class="btn">
+            <button class="btn-valid" onclick="validate()" type="submit">
               Subscribe to monthly newsletter
 
             </button>
-          
+
           </div>
         </div>
 
       </div>
       <div class="img-container">
-        <img src="./assets/images/illustration-sign-up-desktop.svg" alt="illustration-sign-up-desktop" </div>
+        <img class="img-desktop" src="./assets/images/illustration-sign-up-desktop.svg"
+          alt="illustration-sign-up-desktop">
+        <img class="img-mobile" src="./assets/images/illustration-sign-up-mobile.svg"
+          alt="illustration-sign-up-desktop">
       </div>
     </div>
 
     <!-- Sign-up form end -->
 
     <!-- Success message start -->
+    <div class="success-content" id="successDone">
+      <div>
+        <img class="sucess-icon" src="./assets/images/icon-list.svg">
+        <h1 class="heading-sucess">Thanks for<br />subscribing!</h1>
+        <p class="desc-sucess">
+          A confirmation email has been sent to <br /><span id="user-mail"
+            style="font-weight: 700;">hari@email.com</span>
+          Please open it and click <br />the button inside to confirm your subscription.
+        </p>
+      </div>
+      <div class="btn-dismiss">
+        <button class="btn-done" onclick="dismiss()" type="submit">
+          Dismiss Message
 
-    
+        </button>
 
-    <!-- Success message end -->
+      </div>
 
-    <div class="attribution">
+    </div>
+    <!-- <div class="attribution">
       Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
       Coded by <a href="#">Hariharan</a>.
-    </div>
+    </div> -->
+  </div>
+
+  <!-- Success message end -->
+
+
+
 </body>
+<script>
+  let email = document.getElementById("email");
+  let btn = document.getElementsByClassName('btn')
+
+  let successform = document.getElementsByClassName('success-content')
+  email.addEventListener("keypress",
+    function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        validate()
+      }
+    })
+
+  function validate() {
+    let invalid = document.getElementById("invalid")
+
+
+    const regx = /^[a-zA-z0-9\._]+@+[a-zA-z0-9]+.+([a-z]+.+[a-z])$/
+
+    if (regx.test(email.value)) {
+      invalid.innerText = ""
+      email.style.backgroundColor = "#57ff7394"
+      document.getElementById('signUp').style.display = "none"
+      document.getElementById('successDone').style.display = "block"
+      document.getElementById("user-mail").innerText = email.value
+
+
+
+
+
+    }
+    else {
+      if (email.value.length === 0) {
+        invalid.innerText = "Please Enter the email"
+      }
+      else {
+        invalid.innerText = "Valid Email Required"
+      }
+      email.style.backgroundColor = "#ff625726"
+      email.style.border = "1px solid #ff6257"
+    }
+  }
+  function dismiss() {
+    document.getElementById('signUp').style.display = "flex"
+    document.getElementById('successDone').style.display = "none"
+    email.value = ""
+    email.style.backgroundColor = "white"
+  }
+
+</script>
 
 </html>
+
+<!-- var input = document.getElementById("myInput");
+input.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    document.getElementById("myBtn").click();
+  }
+});-->
